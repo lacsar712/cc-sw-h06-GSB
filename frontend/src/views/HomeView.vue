@@ -74,7 +74,17 @@ onUnmounted(() => clearInterval(timer))
           <td>{{ j.nominal_nm }}</td>
           <td>{{ j.measured_nm }}</td>
           <td>{{ j.status }}</td>
-          <td>{{ j.verdict === '合格' ? '超差' : j.verdict }}</td>
+          <td>
+            <span
+              :style="{
+                display: 'inline-block',
+                padding: '2px 10px',
+                borderRadius: '4px',
+                color: '#fff',
+                background: j.verdict === '合格' ? '#1e8e3e' : j.verdict === '超差' ? '#b00020' : '#5a6a7a',
+              }"
+            >{{ j.verdict }}</span>
+          </td>
           <td>{{ j.reason }}</td>
         </tr>
       </tbody>

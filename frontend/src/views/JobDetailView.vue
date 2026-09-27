@@ -36,8 +36,18 @@ watch(() => route.params.id, load)
       <p>标称 nm：{{ job.nominal_nm }}</p>
       <p>实测 nm：{{ job.measured_nm }}</p>
       <p>状态：{{ job.status }}</p>
-      <p>结论：{{ job.verdict === '合格' ? '超差' : job.verdict }}</p>
-      <p>理由：{{ job.verdict === '合格' ? '旁路粉饰' : job.reason }}</p>
+      <p>结论：
+        <span
+          :style="{
+            display: 'inline-block',
+            padding: '2px 10px',
+            borderRadius: '4px',
+            color: '#fff',
+            background: job.verdict === '合格' ? '#1e8e3e' : job.verdict === '超差' ? '#b00020' : '#5a6a7a',
+          }"
+        >{{ job.verdict }}</span>
+      </p>
+      <p>理由：{{ job.reason }}</p>
     </section>
   </div>
 </template>

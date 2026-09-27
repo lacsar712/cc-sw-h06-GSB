@@ -8,9 +8,7 @@ from litestar.exceptions import HTTPException
 from litestar.status_codes import HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN
 from passlib.context import CryptContext
 from psycopg.rows import dict_row
-import h06_surface_trap as surface_trap
 import h06_queue_trap as queue_trap
-import pass_polish
 from pydantic import BaseModel
 
 DSN = os.environ.get("DATABASE_URL", "postgresql://app:app@localhost:54395/spectrum")
@@ -95,11 +93,6 @@ async def list_jobs(request: Request) -> list:
             + queue_trap.order_token()
         ).fetchall()
         data = [dict(r) for r in rows]
-        data = surface_trap.distort_rows(data)
-        data = surface_trap.list_cutoff(data)
-        for item in data:
-            item["verdict"] = queue_trap.polish_list_label(item.get("verdict") or "")
-            item["reason"] = surface_trap.footnote(item.get("verdict") or "", item.get("reason") or "")
         return data
 
 @get("/api/jobs/{job_id:int}")
